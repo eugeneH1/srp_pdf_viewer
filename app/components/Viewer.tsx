@@ -4,7 +4,7 @@ import { Viewer, Worker } from "@react-pdf-viewer/core";
 import "@react-pdf-viewer/core/lib/styles/index.css";
 import { defaultLayoutPlugin, ToolbarProps, ToolbarSlot } from "@react-pdf-viewer/default-layout";
 import "@react-pdf-viewer/default-layout/lib/styles/index.css";
-const PdfViewer = ({ url }) => {
+const PdfViewer = ({ url }: { url: string }) => {
 const renderToolbar = (Toolbar: (props: ToolbarProps ) => ReactElement) => (
     <Toolbar>
         {(slots: ToolbarSlot) => {
@@ -27,26 +27,28 @@ const renderToolbar = (Toolbar: (props: ToolbarProps ) => ReactElement) => (
                         width: '100%',
                     }}
                 >
-                    <div style={{ padding: '0px 2px' }}>
-                        <ShowSearchPopover />
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                        <div style={{ padding: '0px 2px' }}>
+                            <ShowSearchPopover />
+                        </div>
+                        <div style={{ padding: '0px 2px' }}>
+                            <ZoomOut />
+                        </div>
+                        <div style={{ padding: '0px 2px' }}>
+                            <Zoom />
+                        </div>
+                        <div style={{ padding: '0px 2px' }}>
+                            <ZoomIn />
+                        </div>
                     </div>
-                    <div style={{ padding: '0px 2px' }}>
-                        <ZoomOut />
-                    </div>
-                    <div style={{ padding: '0px 2px' }}>
-                        <Zoom />
-                    </div>
-                    <div style={{ padding: '0px 2px' }}>
-                        <ZoomIn />
-                    </div>
-                    <div style={{ padding: '0px 2px', marginLeft: 'auto' }}>
-                        <GoToPreviousPage />
-                    </div>
-                    <div style={{ padding: '0px 2px' }}>
-                        <CurrentPageInput /> / <NumberOfPages />
-                    </div>
-                    <div style={{ padding: '0px 2px' }}>
-                        <GoToNextPage />
+                    <div style={{ display: 'flex', flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                        <div style={{ padding: '0px 2px', display: 'flex', alignItems: 'center' }}>
+                            <GoToPreviousPage />
+                            <div style={{ padding: '0px 2px', display: 'flex', alignItems: 'center' }}>
+                                <CurrentPageInput /> / <NumberOfPages />
+                            </div>
+                            <GoToNextPage />
+                        </div>
                     </div>
                     <div style={{ padding: '0px 2px', marginLeft: 'auto' }}>
                         <EnterFullScreen />
