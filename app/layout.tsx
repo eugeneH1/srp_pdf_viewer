@@ -31,7 +31,7 @@ export default async function RootLayout({
           }
           {!session &&
           <Link href="/login">
-            <Button className='m-4 p-4'>Login</Button>
+            <Button className='m-10 px-auto'>Login</Button>
           </Link>}
         </nav>
         {children}</body>

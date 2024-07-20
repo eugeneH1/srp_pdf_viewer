@@ -12,7 +12,7 @@ const Logout: React.FC = () => {
   };
 
   return (
-    <Button onClick={handleLogout} className="p-4">
+    <Button onClick={handleLogout} className="px-auto m-10">
       Logout
     </Button>
   );

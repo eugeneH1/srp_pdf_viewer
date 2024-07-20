@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
 		try {
 			const response = await sql`
 				SELECT purchased_books FROM customers WHERE email = ${email}`;
-			const purchasedBooks = response.rows[0].purchased_books;
+			const purchasedBooks = response.rows[0].purchased_books || [];
 			return NextResponse.json({ purchasedBooks });
 		} catch (error) {
 			console.error("Error fetching purchased books:", error);

@@ -39,6 +39,10 @@ const authOptions = {
           }
 
           // Compare the provided password with the stored hashed password
+          console.log('Password', password);
+          console.log('User password', user.password);
+          const hashedPassword = bcrypt.hash(password, 10);
+          console.log('Hashed password', hashedPassword);
           const isValidPassword = await compare(password, user.password);
           if (!isValidPassword) {
             throw new Error('Invalid password');

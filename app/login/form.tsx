@@ -19,7 +19,7 @@ export default function LoginForm() {
             redirect: false,
         }); 
     if(!response?.error){
-        router.push('/reader');
+        router.push('/books');
         router.refresh();
     }
     } 
