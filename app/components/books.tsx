@@ -5,72 +5,111 @@ import { getSession } from 'next-auth/react';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { useRouter } from 'next/navigation';
 
 type CardType = {
   id: number;
   name: string;
   image: string;
   price: number;
+  fp: string;
 };
 
 const BooksComponent = () => {
-  const [cards, setCards] = useState<CardType[]>([
+  const cards: CardType[] = [
     {
       id: 1,
       name: "Digital Business Volume 1 Ed 3",
       image: "/db1.jpg",
       price: 250,
+      fp: "vol1.pdf",
     },
     {
-      id: 2,
+      id: 6801,
       name: "Digital Business Volume 2 Ed 3",
       image: "/db2.jpg",
       price: 255,
+      fp: "vol2.pdf",
     },
     {
-      id: 3,
+      id: 6800,
       name: "Digital Business Volume 3 Ed 3",
       image: "/db3.jpg",
       price: 275,
+      fp: "vol3.pdf",
     },
     {
       id: 4,
       name: "Digital Business Primer Ed 3",
       image: "/primer.jpg",
       price: 399,
+      fp: "primer.pdf",
     },
-  ]);
+  ];
 
   const [searchTerm, setSearchTerm] = useState("");
-  const [purchasedBooks, setPurchasedBooks] = useState<string[]>([]);
+  const [purchasedBooks, setPurchasedBooks] = useState<number[]>([]);
 
+  // Filter the cards based on the search term
   const filteredCards = cards.filter(card =>
     card.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const readBook = (card: CardType) => {
-    // Implement read book functionality
+
+  const router = useRouter();
+  // redirect to the pdf viewer passing the file path
+  const readBook = (filePath: string ) => {
+    router.push(`/reader?file_path=${filePath}`);
+  }
+  //redirect to the silk route press website
+  const buyBook = () => {
+    window.location.href = 'https://silkroutepress.com';
   };
 
-  const buyBook = (card: CardType) => {
-    // Implement buy book functionality
-  };
+  //query db to get purchased books for the customer
+  useEffect(() => {
+    const fetchPurchasedBooks = async () => {
+      const session = await getSession();
+      if (session) {
+        try {
+          const response = await fetch('/api/purchasedBooks');
+          const data = await response.json();
+          setPurchasedBooks(data.purchasedBooks);
+          // console.log(data.purchasedBooks);
+
+          // cast single book into array
+          // let purchasedBooks = data.purchasedBooks;
+          // if(!Array.isArray(purchasedBooks)) {
+          //   purchasedBooks = [purchasedBooks];
+          //}
+          console.log(typeof purchasedBooks);
+        } catch (error) {
+          console.error("Error fetching purchased books:", error);
+        }
+      }
+    };
+    fetchPurchasedBooks();
+  }, []);
 
   return (
     <div>
       <header>
-        <div>
+        <div className='flex items-end gap-4 justify-end px-2 mx-1'>
+        <div className="text-md font-medium">Search Products</div>
           <Input
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full bg-background shadow-none appearance-none pl-8 pr-4 py-2 rounded-md"
+            className="w-1/2 bg-background shadow-md appearance-none pl-8 pr-4 py-2 rounded-md"
           />
         </div>
       </header>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 mt-4 md:mt-6">
         {filteredCards.map((card) => {
-          const isPurchased = purchasedBooks.includes(card.name);
-          console.log(isPurchased);
+          //check if single book or array of books
+          let isPurchased;
+          if(!Array.isArray(purchasedBooks)) {
+            isPurchased = purchasedBooks === card.id;
+          } else isPurchased = purchasedBooks.includes(card.id);
           return (
             <Card key={card.id} className="flex flex-col">
               <div className="relative group">
@@ -81,15 +120,16 @@ const BooksComponent = () => {
               </div>
               <CardContent>
                 <h3 className="text-xl font-semibold mb-2">{card.name}</h3>
+                {/* disable buttons based on whether book is purchased or not */}
                 {isPurchased ? (
-                  <Button onClick={() => readBook(card)} className="mr-2 bg-slate-500 text-white p-2 rounded">Read</Button>
+                  <Button onClick={() => readBook(card.fp)} className="mr-2 bg-slate-500 text-white p-2 rounded">Read</Button>
                 ) : (
                   <Button className="mr-2 bg-slate-200 text-white p-2 rounded cursor-not-allowed" disabled>Read</Button>
                 )}
                 {isPurchased ? (
-                  <Button onClick={() => buyBook(card)} className="bg-slate-500 text-white p-2 rounded">Buy</Button>
+                  <Button className="bg-slate-500 text-white p-2 rounded cursor-not-allowed" disabled>Buy</Button>
                 ) : (
-                  <Button className="bg-slate-200 text-white p-2 rounded cursor-not-allowed" disabled>Buy</Button>
+                  <Button onClick={() => buyBook()} className="bg-slate-500 text-white p-2 rounded" >Buy</Button>
                 )}
               </CardContent>
             </Card>

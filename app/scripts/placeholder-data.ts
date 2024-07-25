@@ -1,0 +1,385 @@
+// Placeholder data for users, customers, and invoices
+const users = [
+  {
+    id: "4e3a0d33-2eca-4d06-a642-e836b9ef5bcc",
+    name: "Gregory John Lee",
+    email: "info@silkroutepress.com",
+    password: "GeeLee123",
+    isAdmin: true,
+  },
+  { id: "f9bafd8d-8c51-4e98-bfed-61d8195c4dbb",
+    name: "Eugene Maartens Heynike",
+    email: "eugene@silkroutepress.com",
+    password: "Eugene123",
+    isAdmin: true,
+  },
+  {
+    id: '410544b2-4001-4271-9855-fec4b6a6442a',
+    name: 'Pierre Nico Berrange',
+    email: 'pierre.berrange@liebherr.com',
+    password: '123456',
+    isAdmin: false,
+  },
+  {
+    id: 'd6e15727-9fe1-4961-8c5b-ea44a9bd81aa',
+    name: 'Serisha Chettiar',
+    email: 'serisha.chettiar@stoncor.com',
+    password: '123456',
+    isAdmind: false,
+  },
+  {
+    id: '1d34a0e7-0bb7-42ae-8d36-06e363ba627e',
+    name: 'Vusi Dhlamini',
+    email: 'vdhlamini2@gmail.com',
+    password: '123456',
+    isAdmind: false,
+  },
+  {
+    id: '72e0f62f-977b-4a66-9cf4-5f4a74e5c50f',
+    name: 'Mokgaetsi Elaine Dhlamini',
+    email: 'elained@discovery.co.za',
+    password: '123456',
+    isAdmin: false,
+  },
+  {
+    id: '9c4a06b3-df9a-4f9e-8cfa-50d6829a51d0',
+    name: 'Brightness Duduzile Dube',
+    email: 'Dudu.Dube@3SixtyHealth.co.za',
+    password: '123456',
+    isAdmind: false,
+  },
+  {
+    id: '527423d4-5e9c-4b7c-84a0-d5ddc0637a9a',
+    name: 'Preman Govender',
+    email: 'preman@teraco.co.za',
+    password: '123456',
+    isAdmin: false,
+  },
+  {
+    id: '2ae528fa-51d2-4d56-9b17-7d2c73e5d4c6',
+    name: 'Lavesh Gunpath',
+    email: 'LGunpath@goscor.co.za',
+    password: '123456',
+    isAdmin: false,
+  },
+  {
+    id: 'b157b6ff-d9c5-498e-9583-7ab04ab97db6',
+    name: 'Lutando Mvuso Gxagxisa',
+    email: 'lutandog@gmail.com',
+    password: '123456',
+    isAdmin: false,
+  },
+  {
+    id: 'b0d1c84d-35c7-45c5-8e94-d82b47e89d7f',
+    name: 'Charl Jacobs',
+    email: 'charl@taigan.co.za',
+    password: '123456',
+    isAdmin: false,
+  },
+  {
+    id: '60a56d31-c5a2-4f2d-9b79-3625a9b04b7a',
+    name: 'Potsane Joseph Makume',
+    email: 'pappy.makume@harmony.co.za',
+    password: '123456',
+    isAdmin: false,
+  },
+  {
+    id: 'f98478a5-6b00-46f4-88e7-42a7f0d88c3c',
+    name: 'Pule Patrick Mashele',
+    email: 'mashele.p@dhet.gov.za',
+    password: '123456',
+    isAdmin: false,
+  },
+  {
+    id: '8db61c67-4f3f-4593-b32a-8d4d51a81c48',
+    name: 'Tshegetsang Johanna Mathiba',
+    email: 'thando@tychoflash.co.za',
+    password: '123456',
+    isAdmin: false,
+  },
+  {
+    id: '8839c10f-82ff-4965-8a7e-e54c3f6658d1',
+    name: 'Tiny Mathibeng',
+    email: 'tinym@sadpmr.co.za',
+    password: '123456',
+    isAdmin: false,
+  },
+  {
+    id: 'f227e877-cf43-46b2-bd32-d5117bfc58c1',
+    name: 'Khayalethu Monarch Matrose',
+    email: 'khayalethum@sadpmr.co.za',
+    password: '123456',
+    isAdmin: false,
+  },
+  {
+    id: 'd2e3ee9f-8f66-4cd4-bd8e-62d35301e40d',
+    name: 'Elizabeth Nomacala Matthews',
+    email: 'nomacala.matthews@liebherr.com',
+    password: '123456',
+    isAdmin: false,
+  },
+  {
+    id: 'e65d5128-3e67-48e6-ae26-1c5e448b59f0',
+    name: 'Nokulunga Mlaba',
+    email: 'lunga.mlaba@gmail.com',
+    password: '123456',
+    isAdmin: false,
+  },
+  {
+    id: 'e8a01fa7-8b3d-487e-bc3d-5e0fae9408e5',
+    name: 'Sophy Tsholofelo Mogapi',
+    email: 't.mogapi.dtm@gmail.com',
+    password: '123456',
+    isAdmin: false, 
+  },
+  {
+    id: 'b94da23b-9f9d-4d93-9c08-733b0eb8d7a7',
+    name: 'Kholofelo Mokonyane',
+    email: 'kholofelomo@raf.co.za',
+    password: '123456',
+    isAdmin: false,
+  },
+  {
+    id: '49d99d3f-6b7e-4932-84f7-06d29894f5e6',
+    name: 'Malefaso Motaung',
+    email: 'malefaso.motaung@adcock.com',
+    password: '123456',
+    isAdmin: false,
+  },
+  {
+    id: 'de14b2f7-1563-47c2-8a3a-6f47d18e217e',
+    name: 'Mantsadi Maria Msibi',
+    email: 'mantsadi@yahoo.com',
+    password: '123456',
+    isAdmin: false,
+  },
+  {
+    id: '6d575f5d-e434-43b2-b5c1-4e6a6e0e0782',
+    name: 'Nkululeko Nkabinde',
+    email: 'nkabinnw@eskom.co.za',
+    password: '123456',
+    isAdmin: false,
+  },
+  {
+    id: 'a19f8d2a-92cf-40ec-bb52-e6fb59dd87bf',
+    name: 'Masingita Nkomo-Fumani',
+    email: 'mahuvam@yahoo.com',
+    password: '123456',
+    isAdmin: false,
+  },
+  {
+    id: '31d72c6f-2f3b-4e84-8d33-d5f9a0d3e03a',
+    name: 'Papa Olifant',
+    email: 'papa.olifant@liebherr.com',
+    password: '123456',
+    isAdmin: false,
+  },
+  {
+    id: '58b01e6b-1058-4b5a-8bfb-c217f0fdd97f',
+    name: 'Dane Pillay',
+    email: 'dane@teraco.co.za',
+    password: '123456',
+    isAdmin: false,
+  },
+  {
+    id: 'ea8a37a7-43a0-4ee1-a510-6f6f85f154c1',
+    name: 'Nondumiso Ramaokana',
+    email: 'nondumisor@raf.co.za',
+    password: '123456',
+    isAdmin: false,
+  },
+  {
+    id: 'c495e882-25fe-4b6f-97bf-17f9a80d223b',
+    name: 'Corne Rossouw',
+    email: 'corne.rossouw@howden.co.za',
+    password: '123456',
+    isAdmin: false,
+  },
+  {
+    id: '5cf6c9c0-688f-4ab5-9f7a-6e11e8ac6547',
+    name: 'Pieter Swart',
+    email: 'pieter.swart@howden.co.za',
+    password: '123456',
+    isAdmin: false,
+  },
+  {
+    id: '6154a542-68cf-4e6a-9f9c-8b16343d186a',
+    name: 'Denis Danelson Bambo',
+    email: 'dennis@nandos.com',
+    password: '123456',
+    isAdmin: false,
+  },
+  {
+    id: 'e43ef67b-b0b7-4626-8c9a-e0b43e0c0c71',
+    name: 'Nkosinathi Emmanuel Buthelezi',
+    email: 'thangone@eskom.co.za',
+    password: '123456',
+    isAdmin: false,
+  },
+  {
+    id: 'b9b63a10-9244-41e7-a75f-3b4b7061cda0',
+    name: 'Mpho Pinkie Dangale',
+    email: 'mphopinkier@gmail.com',
+    password: '123456',
+    isAdmin: false,
+  },
+  {
+    id: '7f2a29da-0125-46f0-b0a2-134df5a15a7a',
+    name: 'Raveen Harisunker',
+    email: 'raveen@nandos.com',
+    password: '123456',
+    isAdmin: false,
+  },
+  {
+    id: '202d5752-c9eb-44c6-9f37-4e3d7d47d49d',
+    name: 'Cameroon Khoza',
+    email: 'khozacma@eskom.co.za',
+    password: '123456',
+    isAdmin: false,
+  },
+  {
+    id: 'e2529a02-5d34-4d9e-8583-838efc7a9b71',
+    name: 'Prescillah Kubayi',
+    email: 'prescillah.kubayi@norplats.co.za',
+    password: '123456',
+    isAdmin: false,
+  },
+  {
+    id: 'ee6be632-48ef-44db-a29e-bf06d1c7a5f4',
+    name: 'Langa Bright Kuboni',
+    email: 'langa.kuboni@afrocentricip.com',
+    password: '123456',
+    isAdmin: false,
+  },
+  {
+    id: '0a47813f-b0b0-4ff6-8c69-2b3b8192720c',
+    name: 'Tshego Maake',
+    email: 'maaketshego@gmail.com',
+    password: '123456',
+    isAdmin: false,
+  },
+  {
+    id: 'f8b801e2-b436-4b17-b8c6-c1dcd2be3e61',
+    name: 'Muneiwa Caroline Mabidi',
+    email: 'mumabidi@hotmail.com',
+    password: '123456',
+    isAdmin: false,
+  },
+  {
+    id: '79c6df3b-272c-4642-9e5a-948116d0a1f3',
+    name: 'Phumzile Maluleke',
+    email: 'phum.prosper@gmail.com',
+    password: '123456',
+    isAdmin: false,
+  },
+  {
+    id: '9a7f9c14-67a5-4db2-87e2-448f0b56b75c',
+    name: 'Luto Mbombo',
+    email: 'luto.mbombo@norplats.co.za',
+    password: '123456',
+    isAdmin: false,
+  },
+  {
+    id: '0e6c2be6-2b6b-493e-8ea5-6c34f0e10066',
+    name: 'Yvonne Nonhlanhla Mkhize',
+    email: 'mkhizeyn@eskom.co.za',
+    password: '123456',
+    isAdmin: false,
+  },
+  {
+    id: '89aaed65-531b-43d8-92ea-3b193c3c3175',
+    name: 'Koketjo Mohlatlole',
+    email: 'neo@knownamesmentioned.com',
+    password: '123456',
+    isAdmin: false,
+  },
+  {
+    id: '2756cc4f-3f8e-465d-84e6-98d277e6e29e',
+    name: 'Keneilwe Motaung',
+    email: 'km@hillpet.org',
+    password: '123456',
+    isAdmin: false,
+  },
+  {
+    id: '7d6114e0-3f35-4a37-9f2e-1f66724a0d0e',
+    name: 'Thamsanqa Thabani Ngcobo',
+    email: 'thabani.ngcobo@alstomgroup.com',
+    password: '123456',
+    isAdmin: false,
+  },
+  {
+    id: '9c850012-c3b2-4cd2-ae00-9500cfc8e69b',
+    name: 'Twarisani Theophillus Rikhotso',
+    email: 'theot.rikhotso@gmail.com',
+    password: '123456',
+    isAdmin: false,
+  },
+  {
+    id: '2b040d4e-70e7-4b7c-b9f0-c6c71b3209aa',
+    name: 'Pierre Theron',
+    email: 'theronpi@rutherford.co.za',
+    password: '123456',
+    isAdmin: false,
+  },
+  {
+    id: 'f8d12e99-c74f-4b1c-b0e0-088ca4c5e7f7',
+    name: 'Fannie Mandla Zoko',
+    email: 'fanniezoko0@gmail.com',
+    password: '123456',
+    isAdmin: false,
+  },
+];
+
+const customers = users.filter(user => !user.isAdmin).map((user) => ({
+  id: user.id,
+  name: user.name,
+  email: user.email,
+  purchased_books: [4], // Example book title
+}));
+
+const invoices = customers.map((customer) => ({
+  customer_id: customer.id,
+  amount: 399, // Example amount
+  book_title: "Digital Business Primer Ed 3",
+  status: 'paid',
+  date: '2024-01-07',
+}));
+
+
+const rev = invoices.length * 399
+const revenue = [
+  { month: 'Jan', revenue: rev },
+];
+
+const books = [
+  {
+    id: 4,
+    title: "Digital Business Volume 1 Ed 3",
+    authors: ["Dr. Gregory John Lee", "Dr. Brian Armstrong"],
+    price: 250,
+    file_url: "public/vol1.pdf"
+  },
+  {
+    id: 2,
+    title: "Digital Business Volume 2 Ed 3",
+    authors: ["Dr. Gregory John Lee", "Dr. Brian Armstrong"],
+    price: 255,
+    file_url: "public/vol2.pdf"
+  },
+  {
+    id: 3,
+    title: "Digital Business Volume 3 Ed 3",
+    authors: ["Dr. Gregory John Lee", "Dr. Brian Armstrong"],
+    price: 275,
+    file_url: "public/vol3.pdf"
+  },
+  {
+    id: 4,
+    title: "Digital Business Primer Ed 3",
+    authors: ["Dr. Gregory John Lee", "Dr. Brian Armstrong"], // Array of authors
+    price: 399,
+    file_url: "/public/primer.pdf",
+  }
+];
+
+export { users, customers, invoices, revenue, books };

@@ -6,7 +6,6 @@ export async function GET(request: NextRequest) {
 	const session = await getServerSession();
 	if (session) {
 		const email = session.user?.email;
-        console.log("Email: ", email);
 		try {
 			const response = await sql`
 				SELECT purchased_books FROM customers WHERE email = ${email}`;

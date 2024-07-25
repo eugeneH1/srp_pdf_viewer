@@ -49,7 +49,7 @@ export default function RegisterForm() {
                     <Input id="password" type="password" placeholder="Enter your password" name='password' />
                 </div>
                 <Button type="submit" className="w-full">
-                    Sign in
+                    Register
                 </Button>
             </form>
             </CardContent>
