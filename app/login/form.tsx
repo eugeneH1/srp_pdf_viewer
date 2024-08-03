@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { Input } from '@/components/ui/input';
@@ -37,13 +37,22 @@ export default function LoginForm() {
     });
 
     if (response?.error) {
-      if (response.error.includes('No user found')) {
-        setServerError('No user found with this email.');
-      } else if (response.error.includes('Invalid password')) {
-        setServerError('Incorrect password.');
-      } else {
-        setServerError('An unexpected error occurred.');
+      console.log('Error:', response.error);
+      switch(response.error) {
+        case 'CredentialsSignin':
+          setServerError('Invalid email or password.');
+          break;
+        case 'No user found':
+          setServerError('No user found with this email.');
+          break;
+        case 'Invalid password':
+          setServerError('Incorrect password.');
+          break;
+        default:
+          setServerError('An unexpected error occurred.');
+          break;
       }
+      toast.error(serverError);
     } else {
       router.push('/books');
       router.refresh();

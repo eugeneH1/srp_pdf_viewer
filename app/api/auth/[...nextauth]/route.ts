@@ -1,8 +1,9 @@
 import NextAuth, { SessionStrategy } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import bcrypt, { compare } from 'bcrypt';
+import { compare } from 'bcrypt';
 import { sql } from '@vercel/postgres';
 import { Session } from 'inspector';
+import { redirect } from 'next/dist/server/api-utils';
 
 const authOptions = {
   session: {
@@ -10,6 +11,7 @@ const authOptions = {
   },
   pages: {
     signIn: '/login',
+    error: '/login',
   },
   providers: [
     CredentialsProvider({
@@ -39,24 +41,39 @@ const authOptions = {
           }
 
           // Compare the provided password with the stored hashed password
-          // console.log('Password', password);
-          // console.log('User password', user.password);
-          const hashedPassword = bcrypt.hash(password, 10);
-          // console.log('Hashed password', hashedPassword);
           const isValidPassword = await compare(password, user.password);
           if (!isValidPassword) {
             throw new Error('Invalid password');
           }
 
           // Return the user object
-          return { id: user.id, name: user.name, email: user.email };
+          return { id: user.id, name: user.name, email: user.email, admin: user.admin, };
         } catch (error) {
           console.error('Error during authorization:', error);
           return null;
         }
       }
     })
-  ]
+  ],
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+        token.admin = user.admin;
+      }
+      return token;
+  },
+    async session({ session, token }) {
+      if(token) {
+      session.user.id = token.id;
+      session.user.admin = token.admin;
+      }
+      return session;
+    },
+    // async redirect(url, baseUrl) {
+    //   return url.startsWith(baseUrl) ? `${baseUrl}/books`: baseUrl;
+    // },
+  }
 };
 
 const handler = NextAuth(authOptions);

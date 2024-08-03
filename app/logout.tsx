@@ -8,7 +8,7 @@ import React from 'react';
 const Logout: React.FC = () => {
   const handleLogout = () => {
     // Add your logout logic here
-    signOut();
+    signOut({ callbackUrl: '/'});
     // console.log('User logged out');
   };
 

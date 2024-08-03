@@ -53,21 +53,6 @@ export async function POST(request: Request) {
         if (!webhookSignature) {
             throw new Error('Webhook signature not found in headers');
         }
-        // Clone the request to avoid consuming the body
-        // const clonedRequest = request.clone();
-
-        // Hash the secret using the same algorithm as the webhook signature
-        // const requestBody = await clonedRequest.text();
-
-        // // Hash the secret using the same algorithm as the webhook signature
-        // const hmacHash = createHmac('sha256', secret)
-        //     .update(requestBody) // Assuming the request body is used for the hash
-        //     .digest('base64');
-
-        // // Compare the hashed secret with the webhook signature
-        // if (hmacHash !== webhookSignature) {
-        //     throw new Error('Invalid webhook signature');
-        // }
 
         // exit if not a pdf purchase
         for(const item of line_items) {
@@ -96,8 +81,8 @@ export async function POST(request: Request) {
         } else {
             // Insert user into the users table
             const userResponse = await sql`
-            INSERT INTO users (name, email, password)
-            VALUES (${first_name} || ' ' || ${last_name}, ${email}, ${hashedPassword})
+            INSERT INTO users (name, email, password, admin)
+            VALUES (${first_name} || ' ' || ${last_name}, ${email}, ${hashedPassword}, FALSE)
             RETURNING id
             `;
             userId = userResponse.rows[0].id; // Get the user ID
