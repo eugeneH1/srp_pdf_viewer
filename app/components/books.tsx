@@ -25,15 +25,15 @@ const BooksComponent = () => {
       fp: "vol1.pdf",
     },
     {
-      id: 6801,
+      id: 2,
       name: "Digital Business Volume 2 Ed 3",
       image: "/db2.jpg",
       price: 255,
       fp: "vol2.pdf",
     },
     {
-      id: 6800,
-      name: "Digital Business Volume 3 Ed 3",
+      id: 3,
+      name: "Digital Business Volume 3 Ed 2",
       image: "/db3.jpg",
       price: 275,
       fp: "vol3.pdf",
@@ -63,7 +63,7 @@ const BooksComponent = () => {
   }
   //redirect to the silk route press website
   const buyBook = () => {
-    window.location.href = 'https://silkroutepress.com';
+    window.open('https://silkroutepress.com', '_blank');
   };
 
   //query db to get purchased books for the customer

@@ -9,7 +9,7 @@ const Logout: React.FC = () => {
   const handleLogout = () => {
     // Add your logout logic here
     signOut();
-    console.log('User logged out');
+    // console.log('User logged out');
   };
 
   return (
