@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { hash } from "bcrypt";
+import { hash } from "bcryptjs";
 import { sql } from '@vercel/postgres';
 import { randomBytes, createHmac } from "crypto";
 import nodemailer from "nodemailer";
