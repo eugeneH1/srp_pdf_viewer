@@ -33,8 +33,8 @@ export default function RegisterForm() {
         <div className="flex min-h-screen items-center justify-center bg-background">
             <Card className="w-full max-w-md">
                 <CardHeader>
-                    <CardTitle className="text-2xl font-bold">Welcome back</CardTitle>
-                    <CardDescription>Enter your credentials to create your account.</CardDescription>
+                    <CardTitle className="text-2xl font-bold">Register a new user</CardTitle>
+                    <CardDescription>Enter the users credentials to create your account.</CardDescription>
                 </CardHeader>
                 <CardHeader>
                     <CardContent className="space-y-4 py-2">
@@ -60,7 +60,7 @@ export default function RegisterForm() {
                                 <Checkbox
                                     id="admin"
                                     checked={isAdmin}
-                                    onCheckedChange={(checked) => setIsAdmin(checked)}
+                                    onCheckedChange={(checked) => setIsAdmin(checked === true)}
                                 />
                                 <Label className='ml-2 align-middle' htmlFor="admin">Admin</Label>
                             </div>
