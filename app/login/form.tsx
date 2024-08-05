@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { signIn } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -19,8 +19,9 @@ const schema = z.object({
 
 export default function LoginForm() {
   const router = useRouter();
+  const { data: session } = useSession();
   const [serverError, setServerError] = useState('');
-  const [isLoading, setIsLoading] = useState(false); // Added loading state
+  const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm({
     resolver: zodResolver(schema),
@@ -32,17 +33,16 @@ export default function LoginForm() {
 
   const onSubmit = async (values) => {
     setServerError('');
-    setIsLoading(true); // Set loading state to true before the request
+    setIsLoading(true);
     const response = await signIn('credentials', {
       email: values.email,
       password: values.password,
       redirect: false,
     });
 
-    setIsLoading(false); // Reset loading state after the request
+    setIsLoading(false);
 
     if (response?.error) {
-      console.log('Error:', response.error);
       switch (response.error) {
         case 'CredentialsSignin':
           setServerError('Invalid email or password.');
@@ -59,9 +59,13 @@ export default function LoginForm() {
       }
       toast.error(serverError);
     } else {
-      router.push('/books');
-      router.refresh();
+      toast.success('Login successful');
     }
+  };
+
+  const handleRedirect = () => {
+    router.push('/books');
+    router.refresh();
   };
 
   return (
@@ -98,11 +102,17 @@ export default function LoginForm() {
               )}
             />
             {serverError && <p className="text-red-500 text-sm">{serverError}</p>}
-            <Button type="submit" disabled={form.formState.isSubmitting}>
-              {form.formState.isSubmitting ? 'Signing in...' : 'Sign in'}
+            <Button type="submit" disabled={form.formState.isSubmitting || isLoading}>
+              {isLoading ? 'Signing in...' : 'Sign in'}
             </Button>
+            {session && (
+            <Button onClick={handleRedirect} className='ml-4'>
+              Go to Books
+            </Button>
+        )}
           </form>
         </Form>
+        
       </div>
       <div className="relative w-full hidden sm:block sm:w-1/2">
         <Image

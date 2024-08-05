@@ -1,12 +1,11 @@
-import { getServerSession } from "next-auth";
+'use client'
+import { SessionProvider } from "next-auth/react";
 import LoginForm from "./form";
-import { redirect } from "next/navigation";
 
-
-export default async function LoginPage() {
-    // const session = await getServerSession();
-    // if(session) {
-    //     redirect('/books');
-    // }
-    return <LoginForm />;
-    }
+export default function LoginPage() {
+  return (
+    <SessionProvider>
+      <LoginForm />
+    </SessionProvider>
+  );
+}
