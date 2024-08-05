@@ -1,19 +1,19 @@
-import NextAuth from 'next-auth';
+import NextAuth, { SessionStrategy } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import bcrypt from 'bcryptjs';
 import { sql } from '@vercel/postgres';
-import { JWT } from 'next-auth/jwt';
-import { Session } from 'next-auth';
+import { Session } from 'inspector';
 
 // Define the NextAuth options
 const authOptions = {
+  secret: process.env.NEXTAUTH_SECRET,  // Ensure the secret is included
   session: {
-    strategy: 'jwt' as const,
+    strategy: 'jwt' as SessionStrategy,
   },
-  pages: {
-    signIn: '/login',
-    error: '/login',  // Redirect to login on error
-  },
+  // pages: {
+  //   signIn: '/login',
+  //   error: '/login',  // Redirect to login on error
+  // },
   providers: [
     CredentialsProvider({
       name: 'Credentials',
@@ -21,7 +21,7 @@ const authOptions = {
         email: { label: "Email", type: "text" },
         password: { label: "Password", type: "password" }
       },
-      async authorize(credentials, req) {
+      async authorize(credentials) {
         if (!credentials) {
           throw new Error('No credentials provided');
         }
@@ -62,7 +62,6 @@ const authOptions = {
     async session({ session, token }) {
       session.user.id = token.id;
       session.user.admin = token.admin;
-      
       return session;
     },
   }
