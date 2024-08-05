@@ -65,7 +65,6 @@ export default function LoginForm() {
 
   const handleRedirect = () => {
     router.push('/books');
-    router.refresh();
   };
 
   return (
@@ -105,14 +104,15 @@ export default function LoginForm() {
             <Button type="submit" disabled={form.formState.isSubmitting || isLoading}>
               {isLoading ? 'Signing in...' : 'Sign in'}
             </Button>
-            {session && (
-            <Button onClick={handleRedirect} className='ml-4'>
-              Go to Books
-            </Button>
-        )}
           </form>
         </Form>
-        
+        {session && (
+          <div className="mt-4">
+            <Button onClick={handleRedirect}>
+              Go to Books
+            </Button>
+          </div>
+        )}
       </div>
       <div className="relative w-full hidden sm:block sm:w-1/2">
         <Image
