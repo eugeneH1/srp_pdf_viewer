@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -19,7 +18,6 @@ const schema = z.object({
 
 export default function LoginForm() {
   const router = useRouter();
-  const { data: session } = useSession();
   const [serverError, setServerError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -34,37 +32,32 @@ export default function LoginForm() {
   const onSubmit = async (values) => {
     setServerError('');
     setIsLoading(true);
-    const response = await signIn('credentials', {
-      email: values.email,
-      password: values.password,
-      redirect: false,
-    });
 
-    setIsLoading(false);
+    try {
+      const response = await fetch('/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(values),
+      });
 
-    if (response?.error) {
-      switch (response.error) {
-        case 'CredentialsSignin':
-          setServerError('Invalid email or password.');
-          break;
-        case 'No user found':
-          setServerError('No user found with this email.');
-          break;
-        case 'Invalid password':
-          setServerError('Incorrect password.');
-          break;
-        default:
-          setServerError('An unexpected error occurred.');
-          break;
+      setIsLoading(false);
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        setServerError(errorData.message);
+        toast.error(errorData.message);
+      } else {
+        const successData = await response.json();
+        toast.success(successData.message);
+        router.replace('/books');
       }
-      toast.error(serverError);
-    } else {
-      toast.success('Login successful');
+    } catch (error) {
+      setIsLoading(false);
+      setServerError('An unexpected error occurred.');
+      toast.error('An unexpected error occurred.');
     }
-  };
-
-  const handleRedirect = () => {
-    router.push('/books');
   };
 
   return (
@@ -106,13 +99,6 @@ export default function LoginForm() {
             </Button>
           </form>
         </Form>
-        {session && (
-          <div className="mt-4">
-            <Button onClick={handleRedirect}>
-              Go to Books
-            </Button>
-          </div>
-        )}
       </div>
       <div className="relative w-full hidden sm:block sm:w-1/2">
         <Image

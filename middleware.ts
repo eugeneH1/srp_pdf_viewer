@@ -1,26 +1,19 @@
-import { getToken } from 'next-auth/jwt';
+// middleware.js
 import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
+import { parse } from 'cookie';
 
-const protectedRoutes = ['/reader', '/books'];
+export function middleware(req) {
+  const { auth_token } = parse(req.headers.get('cookie') || '');
 
-export async function middleware(req: NextRequest) {
-  const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
-  console.log('Token:', token); // Debugging: Check the token
-
-  const url = req.nextUrl.clone();
-  const path = req.nextUrl.pathname;
-
-  if (protectedRoutes.some(route => path.startsWith(route))) {
-    if (!token) {
-      url.pathname = '/login';
-      return NextResponse.redirect(url);
-    }
+  if (!auth_token) {
+    const url = req.nextUrl.clone();
+    url.pathname = '/login';
+    return NextResponse.redirect(url);
   }
 
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ['/reader', '/books'],
+  matcher: ['/books', '/reader', '/register'],
 };

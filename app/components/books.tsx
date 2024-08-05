@@ -75,17 +75,10 @@ const BooksComponent = () => {
           const response = await fetch('/api/purchasedBooks');
           const data = await response.json();
           setPurchasedBooks(data.purchasedBooks);
-          // console.log(data.purchasedBooks);
-
-          // cast single book into array
-          // let purchasedBooks = data.purchasedBooks;
-          // if(!Array.isArray(purchasedBooks)) {
-          //   purchasedBooks = [purchasedBooks];
-          //}
-          console.log(typeof purchasedBooks);
+          
         } catch (error) {
           console.error("Error fetching purchased books:", error);
-        }
+        } 
       }
     };
     fetchPurchasedBooks();
