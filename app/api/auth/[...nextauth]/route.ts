@@ -1,19 +1,19 @@
+// pages/api/auth/[...nextauth].js
 import NextAuth, { SessionStrategy } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import bcrypt from 'bcryptjs';
 import { sql } from '@vercel/postgres';
 import { Session } from 'inspector';
 
-// Define the NextAuth options
 const authOptions = {
-  secret: process.env.NEXTAUTH_SECRET,  // Ensure the secret is included
+  secret: process.env.NEXTAUTH_SECRET,
   session: {
     strategy: 'jwt' as SessionStrategy,
   },
-  // pages: {
-  //   signIn: '/login',
-  //   error: '/login',  // Redirect to login on error
-  // },
+  pages: {
+    signIn: '/login',
+    error: '/login',
+  },
   providers: [
     CredentialsProvider({
       name: 'Credentials',
@@ -47,7 +47,7 @@ const authOptions = {
         }
 
         // Return the user object
-        return { id: user.id, name: user.name, email: user.email, admin: user.admin };
+        return { id: user.id, name: user.name, email: user.email };
       }
     })
   ],
@@ -55,16 +55,14 @@ const authOptions = {
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
-        token.admin = user.admin;
       }
       return token;
     },
     async session({ session, token }) {
       session.user.id = token.id;
-      session.user.admin = token.admin;
       return session;
     },
-  }
+  },
 };
 
 const handler = NextAuth(authOptions);
