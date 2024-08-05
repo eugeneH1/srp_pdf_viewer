@@ -20,6 +20,7 @@ const schema = z.object({
 export default function LoginForm() {
   const router = useRouter();
   const [serverError, setServerError] = useState('');
+  const [isLoading, setIsLoading] = useState(false); // Added loading state
 
   const form = useForm({
     resolver: zodResolver(schema),
@@ -31,11 +32,14 @@ export default function LoginForm() {
 
   const onSubmit = async (values) => {
     setServerError('');
+    setIsLoading(true); // Set loading state to true before the request
     const response = await signIn('credentials', {
       email: values.email,
       password: values.password,
       redirect: false,
     });
+
+    setIsLoading(false); // Reset loading state after the request
 
     if (response?.error) {
       console.log('Error:', response.error);
