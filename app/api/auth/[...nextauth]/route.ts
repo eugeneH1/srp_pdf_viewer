@@ -60,10 +60,9 @@ const authOptions = {
       return token;
     },
     async session({ session, token }) {
-      if (token && token.id && typeof token.admin !== 'undefined') {
-        session.user.id = token.id;
-        session.user.admin = token.admin;
-      }
+      session.user.id = token.id;
+      session.user.admin = token.admin;
+      
       return session;
     },
   }
