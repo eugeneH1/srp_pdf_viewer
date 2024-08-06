@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from '@/components/ui/form';
-import { toast } from 'sonner';
+// import { toast } from 'sonner';
 import Image from 'next/image';
 
 const schema = z.object({
@@ -47,16 +47,16 @@ export default function LoginForm() {
       if (!response.ok) {
         const errorData = await response.json();
         setServerError(errorData.message);
-        toast.error(errorData.message);
+        // toast.error(errorData.message);
       } else {
-        const successData = await response.json();
-        toast.success(successData.message);
+        // const successData = await response.json();
+        // toast.success(successData.message);
         router.replace('/books');
       }
     } catch (error) {
       setIsLoading(false);
       setServerError('An unexpected error occurred.');
-      toast.error('An unexpected error occurred.');
+      // toast.error('An unexpected error occurred.');
     }
   };
 

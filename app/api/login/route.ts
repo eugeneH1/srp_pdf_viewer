@@ -26,7 +26,7 @@ export async function POST(req: Request) {
   }
 
   // Set a cookie to indicate the user is logged in
-  const token = { userId: user.id, email: user.email }; // You can include other information if needed
+  const token = { userId: user.id, email: user.email, admin: user.admin }; // You can include other information if needed
   const serialized = serialize('auth_token', JSON.stringify(token), {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
@@ -36,7 +36,7 @@ export async function POST(req: Request) {
   });
 
   const responseHeaders = new Headers();
-  responseHeaders.append('Set-Cookie', serialized);
+  responseHeaders.set('Set-Cookie', serialized);
 
   return new NextResponse(
     JSON.stringify({ message: 'Login successful' }),

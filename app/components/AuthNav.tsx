@@ -1,12 +1,10 @@
 'use client'; // This is a client component
-import { useEffect, useState } from 'react';
 import AuthButton from '../authButton';
+import { useAuth } from '../AuthContex';
 
-interface AuthNavProps {
-  isLoggedIn: boolean;
-}
-
-const AuthNav: React.FC<AuthNavProps> = ({ isLoggedIn}) => {
+const AuthNav: React.FC = () => {
+  const { isLoggedIn } = useAuth(); // Access the authentication state
+  // console.log("in auth nav: ",isLoggedIn);
   return (
     <nav>
       <AuthButton isLoggedIn={isLoggedIn} />

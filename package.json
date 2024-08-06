@@ -30,6 +30,7 @@
 		"jsonwebtoken": "^9.0.2",
 		"next": "14.2.4",
 		"next-auth": "^4.24.7",
+		"next-cookies": "^2.0.3",
 		"nodemailer": "^6.9.14",
 		"pdfjs-dist": "3.10.111",
 		"postcss": "8.4.39",
@@ -45,6 +46,8 @@
 	},
 	"devDependencies": {
 		"@types/bcrypt": "^5.0.2",
+		"@types/bcryptjs": "^2.4.6",
+		"@types/js-cookie": "^3.0.6",
 		"@types/nodemailer": "^6.4.15",
 		"raw-loader": "^4.0.2"
 	}

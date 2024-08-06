@@ -3,9 +3,11 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useAuth } from '../AuthContex';
 
-export default function Home({ isLoggedIn }: { isLoggedIn: boolean }) {
-  console.log('isLoggedIn in home:', isLoggedIn); // Debugging line
+export default function Home() {
+  // console.log('isLoggedIn in home:', isLoggedIn); // Debugging line
+  const { isLoggedIn } = useAuth();
 
   return (
     <div 
@@ -19,7 +21,7 @@ export default function Home({ isLoggedIn }: { isLoggedIn: boolean }) {
     >
       <div className="flex flex-col items-center space-y-6 bg-background/80 p-8 rounded-lg">
         <Image className="h-auto w-auto" src="/logo_nobg.png" alt="Logo" width={1400} height={1400} />
-        <h1 className="text-4xl font-bold text-foreground tracking-tight">Welcome to our ebook reader.</h1>
+        <h1 className="text-4xl font-bold text-foreground tracking-tight">Welcome to our ebook reader</h1>
         {isLoggedIn && ( // Use the isLoggedIn prop
           <Link
             href="/books"

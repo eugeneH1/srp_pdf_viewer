@@ -1,11 +1,11 @@
 "use client"
 
 import { useEffect, useState } from 'react';
-import { getSession } from 'next-auth/react';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
+import { useAuth } from '../AuthContex';
 
 type CardType = {
   id: number;
@@ -49,7 +49,7 @@ const BooksComponent = () => {
 
   const [searchTerm, setSearchTerm] = useState("");
   const [purchasedBooks, setPurchasedBooks] = useState<number[]>([]);
-
+  const { isLoggedIn } = useAuth();
   // Filter the cards based on the search term
   const filteredCards = cards.filter(card =>
     card.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -68,9 +68,10 @@ const BooksComponent = () => {
 
   //query db to get purchased books for the customer
   useEffect(() => {
+    // console.log("session in books: ", session);
     const fetchPurchasedBooks = async () => {
-      const session = await getSession();
-      if (session) {
+      // const session = await getSession();
+      if (isLoggedIn) {
         try {
           const response = await fetch('/api/purchasedBooks');
           const data = await response.json();
@@ -82,7 +83,7 @@ const BooksComponent = () => {
       }
     };
     fetchPurchasedBooks();
-  }, []);
+  }, [isLoggedIn]);
 
   return (
     <div>
@@ -99,7 +100,7 @@ const BooksComponent = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 mt-4 md:mt-6">
         {filteredCards.map((card) => {
           //check if single book or array of books
-          let isPurchased;
+          let isPurchased: boolean;
           if(!Array.isArray(purchasedBooks)) {
             isPurchased = purchasedBooks === card.id;
           } else isPurchased = purchasedBooks.includes(card.id);

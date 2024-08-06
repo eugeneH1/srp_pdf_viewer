@@ -4,40 +4,29 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import React from 'react';
-import Cookies from 'js-cookie';
-import { useState } from 'react';
+import { useAuth } from "./AuthContex";
 
 interface AuthButtonProps {
-  isLoggedIn: boolean;
+  isLoggedIn: boolean; // Define the prop type
 }
 
 const AuthButton: React.FC<AuthButtonProps> = ({ isLoggedIn }) => {
   const router = useRouter();
-  const [LoggedIn, setIsLoggedIn] = useState(isLoggedIn);
+  const { login, logout } = useAuth(); // Access the authentication state and functions
 
   const handleAuth = async () => {
     if (isLoggedIn) {
-      // Handle logout
-      const response = await fetch('/api/logout', {
-        method: 'POST',
-      });
-
-      if (response.ok) {
-        Cookies.remove('auth_token');
-        setIsLoggedIn(false);
-        router.replace('/');
-      } else {
-        console.error('Failed to log out');
-      }
+      await logout(); // Call the logout function
+      router.replace('/'); // Redirect to home
     } else {
-      router.replace('/login');
+      router.replace('/login'); // Redirect to login page
     }
   };
 
   return (
     <div className="flex items-center">
       <Button onClick={handleAuth} className="px-auto m-2">
-        {LoggedIn ? 'Logout' : 'Login'}
+        {isLoggedIn ? 'Logout' : 'Login'} {/* Change text based on state */}
       </Button>
       <div className="flex-grow flex justify-center">
         <Image src="/logo.png" alt="logo" width={100} height={100} />

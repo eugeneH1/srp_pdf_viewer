@@ -1,15 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { sql } from '@vercel/postgres';
-import { getServerSession } from 'next-auth';
+import { cookies } from 'next/headers';
 
 export async function GET(request: NextRequest) {
-	const session = await getServerSession();
-	if (session) {
-		const email = session.user?.email;
+	const authCookie = cookies().get('auth_token');
+	console.log("authCookie in api: ", authCookie);
+	if (authCookie) {
 		try {
+			const parsedCookie = JSON.parse(authCookie.value);
+			const email = parsedCookie.email;
 			const response = await sql`
 				SELECT purchased_books FROM customers WHERE email = ${email}`;
 			const purchasedBooks = response.rows[0].purchased_books || [];
+			console.log("purchased books: ", purchasedBooks);
 			return NextResponse.json({ purchasedBooks });
 		} catch (error) {
 			console.error("Error fetching purchased books:", error);
