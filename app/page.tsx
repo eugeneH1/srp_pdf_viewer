@@ -1,12 +1,13 @@
-// 'use client';
+'use client';
 
 import React from 'react';
-import Home from './components/Home'; // Adjust the import as necessary
-// import { cookies } from 'next/headers';
+import Home from './components/Home';
+import ClientLayout from './ClientLayout';
 
 export default function Page() {
-  // const authCookie = cookies().get('auth_token');
-  // const isLoggedIn = !!authCookie; // Determine logged-in status based on cookie
-
-  return <Home />;
+  return (
+    <ClientLayout>
+      <Home />
+    </ClientLayout>
+  );
 }

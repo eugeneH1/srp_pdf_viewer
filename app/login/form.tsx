@@ -8,7 +8,8 @@ import { useRouter } from 'next/navigation';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from '@/components/ui/form';
-// import { toast } from 'sonner';
+import { useDispatch } from 'react-redux';
+import { login } from '../store';
 import Image from 'next/image';
 
 const schema = z.object({
@@ -20,6 +21,7 @@ export default function LoginForm() {
   const router = useRouter();
   const [serverError, setServerError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useDispatch();
 
   const form = useForm({
     resolver: zodResolver(schema),
@@ -47,16 +49,14 @@ export default function LoginForm() {
       if (!response.ok) {
         const errorData = await response.json();
         setServerError(errorData.message);
-        // toast.error(errorData.message);
       } else {
-        // const successData = await response.json();
-        // toast.success(successData.message);
+        const userData = await response.json();
+        dispatch(login(userData.user));
         router.replace('/books');
       }
     } catch (error) {
       setIsLoading(false);
       setServerError('An unexpected error occurred.');
-      // toast.error('An unexpected error occurred.');
     }
   };
 

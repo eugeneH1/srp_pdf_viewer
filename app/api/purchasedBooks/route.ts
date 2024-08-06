@@ -4,7 +4,7 @@ import { cookies } from 'next/headers';
 
 export async function GET(request: NextRequest) {
 	const authCookie = cookies().get('auth_token');
-	console.log("authCookie in api: ", authCookie);
+	// console.log("authCookie in api: ", authCookie);
 	if (authCookie) {
 		try {
 			const parsedCookie = JSON.parse(authCookie.value);

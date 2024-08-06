@@ -1,6 +1,7 @@
 // app/api/logout/route.ts
 import { NextResponse } from 'next/server';
 import { serialize } from 'cookie';
+import { logout } from '../../store'; // Import the logout action from the Redux store
 
 export async function POST() {
   const serialized = serialize('auth_token', '', {
@@ -13,6 +14,9 @@ export async function POST() {
 
   const responseHeaders = new Headers();
   responseHeaders.append('Set-Cookie', serialized);
+
+  // Dispatch the logout action to update the Redux store
+  logout();
 
   return new NextResponse(
     JSON.stringify({ message: 'Logout successful' }),

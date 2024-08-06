@@ -5,7 +5,8 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
-import { useAuth } from '../AuthContex';
+import { useSelector } from 'react-redux';
+import type { RootState } from '../store';
 
 type CardType = {
   id: number;
@@ -49,7 +50,7 @@ const BooksComponent = () => {
 
   const [searchTerm, setSearchTerm] = useState("");
   const [purchasedBooks, setPurchasedBooks] = useState<number[]>([]);
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn } = useSelector((state: RootState) => state.auth);
   // Filter the cards based on the search term
   const filteredCards = cards.filter(card =>
     card.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -68,22 +69,24 @@ const BooksComponent = () => {
 
   //query db to get purchased books for the customer
   useEffect(() => {
-    // console.log("session in books: ", session);
     const fetchPurchasedBooks = async () => {
-      // const session = await getSession();
-      if (isLoggedIn) {
-        try {
-          const response = await fetch('/api/purchasedBooks');
+      try {
+        const response = await fetch('/api/purchasedBooks');
+        if (response.ok) {
           const data = await response.json();
           setPurchasedBooks(data.purchasedBooks);
-          
-        } catch (error) {
-          console.error("Error fetching purchased books:", error);
-        } 
+        } else {
+          console.error("Error fetching purchased books:", await response.text());
+        }
+      } catch (error) {
+        console.error("Error fetching purchased books:", error);
       }
     };
-    fetchPurchasedBooks();
-  }, [isLoggedIn]);
+
+    if (isLoggedIn) {
+      fetchPurchasedBooks();
+    }
+  }, []);
 
   return (
     <div>
